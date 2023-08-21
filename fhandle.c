@@ -1,6 +1,15 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
+
+/**
+ * fhandle - entry function to handle the format specifiers
+ * @des: file description
+ * @list: name of argument list
+ * @format_p: pointer to format
+ * @num: pointer to print count of elements
+ */
 
 void fhandle(int des, va_list list, const char **format_p, int *num)
 {
