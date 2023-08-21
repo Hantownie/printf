@@ -15,6 +15,7 @@ void fhandle(int des, va_list list, const char **format_p, int *num)
 {
 	char form = *(*format_p);
 	char *str, c, mod;
+	int len, s;
 
 	switch (form)
 	{
@@ -28,12 +29,10 @@ void fhandle(int des, va_list list, const char **format_p, int *num)
 		case 's':
 			{
 				str = va_arg(list, char *);
-				while (str)
-				{
-					write(des, str, 1);
-					str++;
-					(*num)++;
-				}
+				for (len = 0; str[len]; len++)
+					s++;
+				write(des, str, s);
+				(*num) += s;
 				break;
 			}
 		case '%':{
