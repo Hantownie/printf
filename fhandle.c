@@ -44,10 +44,8 @@ void fhandle(int des, va_list list, const char **format_p, int *num)
 			}
 		default:
 			{
-				 mod = '%';
-				 write(des, &mod, 1);
-				 write(des, &form, 1);
-				 (*num) += 2;
+				 write(des, "invalid_format", 1);
+				 (*num) += 14;
 				break;
 			}
 	}
