@@ -28,9 +28,9 @@ void fhandle(int des, va_list list, const char **format_p, int *num)
 		case 's':
 			{
 				str = va_arg(list, char *);
-				while (str)
+				while (*str)
 				{
-				write(des, &str, 1);
+				write(des, str, 1);
 				str++;
 				(*num)++;
 				}
