@@ -1,53 +1,37 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
 
 /**
  * fhandle - entry function to handle the format specifiers
- * @des: file description
+ * @output: array to handle print
  * @list: name of argument list
- * @format_p: pointer to format
- * @num: pointer to print count of elements
+ * @format_p: formatted string
+ * @num: index
+ * Return: 1 || 2
  */
 
-void fhandle(int des, va_list list, const char **format_p, int *num)
+int fhandle(const char *format_p, int *num, va_list list, char output[])
 {
-	char form = *(*format_p);
-	char *str, c, mod;
+	int i, length = 0;
+	int chars = -1;
+	form_t cspecs[] = {
+		 {'c', p_char}, {'s', p_string}, {'%', p_mod},
+		 {'\0', NULL}
+	};
 
-	switch (form)
+	i = 0;
+	while (cspecs[i].form != '\0')
 	{
-		case 'c':
-			{
-				c = va_arg(list, int);
-				write(des, &c, 1);
-				(*num)++;
-				break;
-			}
-		case 's':
-			{
-				str = va_arg(list, char *);
-				while (*str)
-				{
-				write(des, str, 1);
-				str++;
-				(*num)++;
-				}
-				break;
-			}
-		case '%':{
-				 mod = '%';
-				 write(des, &mod, 1);
-				 (*num)++;
-				break;
-			}
-		default:
-			{
-				 write(des, "invalid_format", 1);
-				 (*num) += 14;
-				break;
-			}
+		if (format_p[*num] == cspecs[i].form)
+			return (cspecs[i].fn(list, output));
+		i++;
 	}
-	(*format_p)++;
+	if (cspecs[i].form == '\0')
+	{
+		if (format_p[*num] == '\0')
+			return (-1);
+		length += write(1, "%%", 1);
+		length += write(1, &format_p[*num], 1);
+		return (length);
+	}
+	return (chars);
 }

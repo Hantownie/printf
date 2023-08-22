@@ -1,8 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
 #include "main.h"
-#include <stdarg.h>
 
+void print_output(char output[], int *outin);
 /**
  * _printf - entry point to print format specifiers
  * @format: list of specifiers
@@ -10,25 +8,46 @@
  */
 int _printf(const char *format, ...)
 {
+	int i, chars = 0, outin = 0, spec = 0;
 	va_list list;
+	char output[O_SIZE];
 
-	int num = 0;
-
+	if (format == NULL)
+		return (-1);
 	va_start(list, format);
-	while (*format != '\0')
+	i = 0;
+	while (format && format[i] != '\0')
 	{
-		if (*format == '%')
+		if (format[i] != '%')
 		{
-			format++;
-			fhandle(STDOUT_FILENO, list, &format, &num);
+			output[outin++] = format[i];
+			if (outin == O_SIZE)
+				print_output(output, &outin);
+			chars++;
 		}
 		else
 		{
-			write(STDOUT_FILENO, format, 1);
-			num++;
+			print_output(output, &outin);
+			++i;
+			spec = fhandle(format, &i, list, output);
+			if (spec == -1)
+				return (-1);
+			chars += spec;
 		}
-		format++;
+		i++;
 	}
+	print_output(output, &outin);
 	va_end(list);
-	return (num);
+	return (chars);
+}
+/**
+ * print_output - prints chars saved
+ * @output: char array
+ * @outin: length
+ */
+void print_output(char output[], int *outin)
+{
+	if (*outin > 0)
+		write(1, &output[0], *outin);
+	*outin = 0;
 }
