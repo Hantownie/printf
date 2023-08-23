@@ -10,7 +10,7 @@ int p_char(va_list list, char output[])
 {
 	char c = va_arg(list, int);
 
-	return (char_h(c, output));
+	return (write(1, &c, 1));
 }
 /**
  * p_string - Prints a string
