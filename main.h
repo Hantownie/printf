@@ -14,7 +14,6 @@ struct form
 };
 
 typedef struct form form_t;
-int char_h(char c, char output[]);
 
 int _printf(const char *format, ...);
 int fhandle(const char *format_p, int *num, va_list list, char output[]);
