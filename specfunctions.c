@@ -23,6 +23,7 @@ int p_string(va_list list, char output[])
 	int len = 0;
 	char *str = va_arg(list, char *);
 
+	UNUSED(output);
 	if (str == NULL)
 		str = "(null)";
 	while (str[len] != '\0')
@@ -37,5 +38,7 @@ int p_string(va_list list, char output[])
  */
 int p_mod(va_list list, char output[])
 {
+	UNUSED(list);
+	UNUSED(output);
 	return (write(1, "%%", 1));
 }

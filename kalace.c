@@ -47,7 +47,14 @@ int _printf(const char *format, ...)
  */
 void print_output(char output[], int *outin)
 {
+	char *r = 0;
+
 	if (*outin > 0)
-		write(1, &output[0], *outin);
+	{
+		*r = write(1, &output[0], *outin);
+		if (r == NULL)
+		{
+		}
+	}
 	*outin = 0;
 }
