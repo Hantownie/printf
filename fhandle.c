@@ -12,7 +12,6 @@
 int fhandle(const char *format_p, int *num, va_list list, char output[])
 {
 	int i;
-	int chars = -1;
 	form_t cspecs[] = {
 		 {'c', p_char}, {'s', p_string}, {'%', p_mod},
 		 {'\0', NULL}
@@ -25,13 +24,10 @@ int fhandle(const char *format_p, int *num, va_list list, char output[])
 			return (cspecs[i].fn(list, output));
 		i++;
 	}
-	if (cspecs[i].form == '\0')
-	{
-		if (format_p[*num] == '\0')
-			return (-1);
-		output[0] = '%';
-		output[1] = format_p[*num];
-		return (2);
-	}
-	return (chars);
+	if (format_p[*num] == '\0')
+		return (-1);
+	output[0] = '%';
+	output[1] = format_p[*num];
+	return (2);
+
 }
