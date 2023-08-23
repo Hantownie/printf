@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
-#define UNUSED(x)(void)(x)
+#define UNUSED(x) (void)(x)
 
 #define O_SIZE 1024
 

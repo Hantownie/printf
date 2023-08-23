@@ -8,8 +8,8 @@ void print_output(char output[], int *outin);
  */
 int _printf(const char *format, ...)
 {
-	int i, chars = 0, outin = 0, spec = 0;
 	va_list list;
+	int i, chars = 0, outin = 0, spec = 0;
 	char output[O_SIZE];
 
 	if (format == NULL)
@@ -22,16 +22,22 @@ int _printf(const char *format, ...)
 		{
 			output[outin++] = format[i];
 			if (outin == O_SIZE)
+			{
+				chars += outin;
 				print_output(output, &outin);
+			}
 			chars++;
 		}
 		else
 		{
 			print_output(output, &outin);
-			++i;
+			i++;
 			spec = fhandle(format, &i, list, output);
 			if (spec == -1)
+			{
+				va_end(list);
 				return (-1);
+			}
 			chars += spec;
 		}
 		i++;

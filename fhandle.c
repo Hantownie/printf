@@ -11,7 +11,7 @@
 
 int fhandle(const char *format_p, int *num, va_list list, char output[])
 {
-	int i, length = 0;
+	int i;
 	int chars = -1;
 	form_t cspecs[] = {
 		 {'c', p_char}, {'s', p_string}, {'%', p_mod},
@@ -29,9 +29,9 @@ int fhandle(const char *format_p, int *num, va_list list, char output[])
 	{
 		if (format_p[*num] == '\0')
 			return (-1);
-		length += write(1, "%%", 1);
-		length += write(1, &format_p[*num], 1);
-		return (length);
+		output[0] = '%';
+		output[1] = format_p[*num];
+		return (2);
 	}
 	return (chars);
 }

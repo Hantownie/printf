@@ -10,7 +10,8 @@ int p_char(va_list list, char output[])
 {
 	char c = va_arg(list, int);
 
-	return (write(1, &c, 1));
+	output[0] = c;
+	return (1);
 }
 /**
  * p_string - Prints a string
@@ -21,6 +22,7 @@ int p_char(va_list list, char output[])
 int p_string(va_list list, char output[])
 {
 	int len = 0;
+	int i = 0;
 	char *str = va_arg(list, char *);
 
 	UNUSED(output);
@@ -28,7 +30,9 @@ int p_string(va_list list, char output[])
 		str = "(null)";
 	while (str[len] != '\0')
 		len++;
-	return (write(1, str, len));
+	for (i = 0; i < len; i++)
+		output[i] = str[i];
+	return (len);
 }
 /**
  * p_mod - Prints percent sign
@@ -39,6 +43,6 @@ int p_string(va_list list, char output[])
 int p_mod(va_list list, char output[])
 {
 	UNUSED(list);
-	UNUSED(output);
-	return (write(1, "%%", 1));
+	output[0] = '%';
+	return (1);
 }
