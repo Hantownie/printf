@@ -47,14 +47,9 @@ int _printf(const char *format, ...)
  */
 void print_output(char output[], int *outin)
 {
-	char *r = 0;
-
 	if (*outin > 0)
 	{
-		*r = write(1, &output[0], *outin);
-		if (r == NULL)
-		{
-		}
+		write(1, &output[0], *outin);
 	}
 	*outin = 0;
 }
